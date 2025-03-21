@@ -18,7 +18,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex h-screen overflow-hidden">
       <div
-        className={`lg:w-64 bg-gray-800 text-white ${sidebarOpen ? "block" : "hidden"
+        className={`lg:w-64 ${sidebarOpen ? "block" : "hidden"
           } lg:block flex-shrink-0`}
       >
         <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />

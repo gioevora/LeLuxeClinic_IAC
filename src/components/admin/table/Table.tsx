@@ -397,7 +397,7 @@ export default function App() {
 
     const topContent = React.useMemo(() => {
         return (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 text-black">
                 <div className="flex justify-between gap-3 items-end">
                     <div className="w-full">
                         <Input

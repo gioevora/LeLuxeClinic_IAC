@@ -8,23 +8,23 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function AppointmentPage() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const router = useRouter();
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const router = useRouter();
 
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const userId = params.get('userId') || sessionStorage.getItem('userId');
+    // useEffect(() => {
+    //     const params = new URLSearchParams(window.location.search);
+    //     const userId = params.get('userId') || sessionStorage.getItem('userId');
 
-        if (!userId) {
-            toast.error("You must be logged in to book an appointment.");
-            setTimeout(() => {
-                router.push('/auth/login');
-            }, 3000);
-        } else {
-            sessionStorage.setItem('userId', userId);
-            setIsLoggedIn(true);
-        }
-    }, []);
+    //     if (!userId) {
+    //         toast.error("You must be logged in to book an appointment.");
+    //         setTimeout(() => {
+    //             router.push('/auth/login');
+    //         }, 3000);
+    //     } else {
+    //         sessionStorage.setItem('userId', userId);
+    //         setIsLoggedIn(true);
+    //     }
+    // }, []);
 
     return (
         <div>
@@ -34,13 +34,9 @@ function AppointmentPage() {
                 backgroundImage="/images/bg.jpg"
             />
             <div className="container mx-auto px-4 py-8">
-                {isLoggedIn ? (
-                    <AppointmentForm />
-                ) : (
-                    <div className="text-center text-red-600">
-                        <p>Sorry for the inconvenience, but you need to login first.</p>
-                    </div>
-                )}
+
+                <AppointmentForm />
+
             </div>
             <ToastContainer position="top-right" autoClose={5000} />
         </div>

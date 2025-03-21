@@ -15,10 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta name="color-scheme" content="light" />
-      </head>
-      <body className="force-light">
+      <body className="overflow-x-hidden bg-white">
         <LayoutContent>
           <Toaster position="top-center" />
           {children}

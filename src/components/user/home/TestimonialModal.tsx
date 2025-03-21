@@ -92,12 +92,12 @@ const CreateModal = () => {
 
   return (
     <>
-      <p className="text-base sm:text-lg text-gray-600">
+      <div className="text-base sm:text-lg text-gray-600">
         Hear directly from those who’ve experienced our service.{" "}
-        <span className="text-yellow-600 cursor-pointer font-semibold underline" role="button" onClick={onOpen}>
+        <div className="text-yellow-600 cursor-pointer font-semibold underline" role="button" onClick={onOpen}>
           Click here
-        </span>
-      </p>
+        </div>
+      </div>
 
       <Modal size="xl" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>

@@ -8,15 +8,16 @@ import React from 'react'
 
 function page() {
     return (
-        <div>
+        <section>
             <HeroSection
                 title="News And Blogs"
                 subtitle="Stay updated with the latest news and insights."
                 backgroundImage="/images/bg.jpg"
             />
+            
             <BlogsandNewsTab/>
             <ContactForm/>
-        </div>
+        </section>
     )
 }
 
