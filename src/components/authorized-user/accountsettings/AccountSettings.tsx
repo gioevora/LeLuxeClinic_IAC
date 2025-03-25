@@ -23,10 +23,10 @@ const AccountSettings = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const userId = typeof window !== "undefined" ? sessionStorage.getItem('userId') : null;
+                const userId = typeof window !== "undefined" ? localStorage.getItem('userId') : null;
 
                 if (!userId) {
-                    console.error("No user ID found in sessionStorage");
+                    console.error("No user ID found in localStorage");
                     return;
                 }
 

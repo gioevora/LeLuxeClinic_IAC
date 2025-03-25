@@ -8,7 +8,7 @@ import ChipComponent from "@/components/globals/ChipComponent";
 import UpdateModal from "../appointment/UpdateModal";
 
 const getRecord = (records: Record[], id: string) => {
-    const userId = typeof window !== "undefined" ? sessionStorage.getItem('userId') : null;
+    const userId = typeof window !== "undefined" ? localStorage.getItem('userId') : null;
     if (!userId) return null;
     const record = records.find((record) => record.userId === userId && String(record.id) === id);
     return record || null;

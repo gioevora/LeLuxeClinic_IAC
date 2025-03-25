@@ -15,7 +15,7 @@ const Appointment = () => {
     console.log("Data:", data);
 
     const fetchData = async () => {
-        const userId = sessionStorage.getItem("userId");
+        const userId = localStorage.getItem("userId");
         
         if (!userId) {
             console.error("User not authenticated");
@@ -53,7 +53,7 @@ const Appointment = () => {
         { key: "service", name: "Service" },
         { key: "message", name: "Message" },
         { key: "status", name: "Status" },
-        { key: "actions", name: "Actions" },
+        // { key: "actions", name: "Actions" },
     ];
 
     const INITIAL_VISIBLE_COLUMNS = new Set([
@@ -67,7 +67,7 @@ const Appointment = () => {
         "message",
         "phonenumber",
         "status",
-        "actions",
+        // "actions",
     ]);
 
     return (

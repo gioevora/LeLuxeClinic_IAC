@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import {
   Modal,
@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from "@heroui/modal";
 import { create as validationSchema } from "./schema";
-import { Formik, Form, Field, FieldProps } from "formik";
+import { Formik, Form, Field, FieldProps, useFormikContext } from "formik";
 import { create as action } from "./Action";
 import { Prisma } from "@prisma/client";
 import { onPostSubmit } from "@/components/globals/Utils";
@@ -18,7 +18,6 @@ import { Input, Textarea } from "@heroui/input";
 import { uploadFileToVercelBlob } from "@/components/globals/uploads";
 import Image from "next/image";
 
-
 const CreateModal = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -26,7 +25,7 @@ const CreateModal = () => {
   const initialValues = {
     name: "",
     message: "",
-    imageUrl: "",
+    imageUrl: null,
     status: "",
   };
 
@@ -35,19 +34,25 @@ const CreateModal = () => {
     setFieldValue: (field: string, value: any) => void
   ) => {
     const file = event.target.files?.[0];
-    if (!file) return setFieldValue("imageUrl", null);
+    if (!file) {
+      setFieldValue("imageUrl", null);
+      setPreviewImage(null);
+      return;
+    }
+
+    // Display preview
     const objectUrl = URL.createObjectURL(file);
     setPreviewImage(objectUrl);
-    const formData = new FormData();
-    formData.append("file", file);
 
     try {
+      // Upload to server
       const response = await uploadFileToVercelBlob(file);
       if (response.error) throw new Error(response.error);
-
+      if (!response.url) throw new Error("Image upload failed: URL is missing.");
+      
       setFieldValue("imageUrl", response.url);
     } catch (error) {
-      console.error("File upload failed:", error);
+      console.error("File upload error:", error);
     }
   };
 
@@ -62,6 +67,7 @@ const CreateModal = () => {
         setSubmitting(false);
         return;
       }
+      
       const formattedValues: Prisma.TestimonialsCreateInput = {
         name: values.name,
         message: values.message,
@@ -78,15 +84,13 @@ const CreateModal = () => {
 
       console.log("Response:", response);
       onPostSubmit(response, { resetForm }, onClose);
-      setPreviewImage(null)
+      setPreviewImage(null);
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
       setSubmitting(false);
     }
   };
-
-
 
   return (
     <>
@@ -105,7 +109,8 @@ const CreateModal = () => {
               <Form>
                 <ModalHeader>Add Testimonial Type</ModalHeader>
                 <ModalBody>
-                  <div >
+                  <div>
+                    {/* Name Field */}
                     <Field name="name">
                       {({ field, meta }: FieldProps) => (
                         <div>
@@ -124,12 +129,13 @@ const CreateModal = () => {
                         </div>
                       )}
                     </Field>
+
+                    {/* Message Field */}
                     <Field name="message">
                       {({ field, meta }: FieldProps) => (
                         <div>
                           <Textarea
                             {...field}
-                            type="text"
                             size="md"
                             variant="bordered"
                             label="Message"
@@ -142,6 +148,8 @@ const CreateModal = () => {
                         </div>
                       )}
                     </Field>
+
+                    {/* Image Upload Field */}
                     <Field name="imageUrl">
                       {({ meta }: FieldProps) => (
                         <div>
@@ -151,6 +159,7 @@ const CreateModal = () => {
                             variant="bordered"
                             label="Image"
                             labelPlacement="outside"
+                            accept="image/*"
                             onChange={(e) => handleFileChange(e, setFieldValue)}
                           />
                           {meta.touched && meta.error && (
@@ -159,6 +168,8 @@ const CreateModal = () => {
                         </div>
                       )}
                     </Field>
+
+                    {/* Image Preview */}
                     {previewImage && (
                       <Image
                         src={previewImage}
@@ -167,10 +178,10 @@ const CreateModal = () => {
                         height={100}
                         width={100}
                       />
-
                     )}
                   </div>
                 </ModalBody>
+
                 <ModalFooter>
                   <Button color="primary" type="submit" isLoading={isSubmitting}>
                     Save

@@ -56,7 +56,7 @@ export const login = async (values: { email: string; password: string }) => {
         return { success: false, message: "Invalid email or password." };
       }
   
-      const session = await cookies();
+      const local = await cookies();
       
       const token = JSON.stringify({
         id: user.id,
@@ -64,9 +64,9 @@ export const login = async (values: { email: string; password: string }) => {
         role: user.role
       });
   
-      session.set('user_token', token, { path: '/', httpOnly: true, secure: true });
+      local.set('user_token', token, { path: '/', httpOnly: true, secure: true });
   
-      session.set("isLoggedIn", "true");
+      local.set("isLoggedIn", "true");
   
       return { success: true, message: "Login successful", user, token };
     } catch (error) {
@@ -180,11 +180,11 @@ export const emailContent = async (data: { email: string, fullname: string, rese
 
 export const logout = async () => {
     try {
-      const session = await cookies();
+      const local = await cookies();
   
       const keys = ["user_token", "isLoggedIn", "accountID"];
       keys.forEach((key) => {
-        session.delete(key);
+        local.delete(key);
       });
   
       return {

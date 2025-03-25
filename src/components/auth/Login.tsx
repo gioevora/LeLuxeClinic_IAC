@@ -41,7 +41,7 @@ const LoginComponent = () => {
         throw new Error(response.message || "Login failed.");
       }
 
-      sessionStorage.setItem("userId", response.user.id);
+      localStorage.setItem("userId", response.user.id);
       setCookie(null, "isLoggedIn", "true", { path: "/" });
       setCookie(null, "userRole", response.user.role, { path: "/" });
 

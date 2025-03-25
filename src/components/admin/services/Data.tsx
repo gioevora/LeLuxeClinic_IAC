@@ -27,28 +27,29 @@ const Data = () => {
     const catModel = "Category";
 
     const columns = [
-        { key: "id", name: "ID" },
-        { key: "name", name: "Service Name" },
-        { key: "description", name: "Description" },
-        { key: "category", name: "Category" },
-        { key: "type", name: "Type" },
-        { key: "price", name: "Price" },
-        { key: "duration", name: "Duration" },
-        { key: "durationUnit", name: "Duration Unit" },
-        { key: "imageUrl", name: "Image" },
-        { key: "actions", name: "Actions" },
+      { key: "id", name: "ID" },
+      { key: "name", name: "Service Name" },
+      { key: "description", name: "Description" },
+      { key: "category", name: "Category" },
+      { key: "type", name: "Type" },
+      { key: "price", name: "Price" },
+      { key: "duration", name: "Duration" },
+      { key: "durationUnit", name: "Duration Unit" },
+      { key: "imageUrl", name: "Image" },
+      { key: "actions", name: "Actions", style: { width: "120px", textAlign: "center" } },
     ];
 
     const types = [
-        { key: "id", name: "ID" },
-        { key: "name", name: "Type Name" },
-        { key: "actions", name: "Actions" },
+      { key: "id", name: "ID" },
+      { key: "name", name: "Type Name" },
+      { key: "actions", name: "Actions", style: { width: "120px", textAlign: "center" } },
     ];
+    
 
     const categories = [
-        { key: "id", name: "ID" },
-        { key: "name", name: "Category Name" },
-        { key: "actions", name: "Actions" },
+      { key: "id", name: "ID" },
+      { key: "name", name: "Category Name" },
+      { key: "actions", name: "Actions", style: { width: "120px", textAlign: "center" } },
     ];
 
     const fetchData = async () => {

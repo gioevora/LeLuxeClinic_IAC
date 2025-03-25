@@ -204,8 +204,8 @@ const UpdateModal = ({ record, category, type }: Props) => {
                             }}
                             className="w-full"
                           >
-                            <SelectItem key="minutes">Minutes</SelectItem>
-                            <SelectItem key="hours">Hours</SelectItem>
+                            <SelectItem key="minutes">Minute/s</SelectItem>
+                            <SelectItem key="hours">Hour/s</SelectItem>
                           </Select>
                         </div>
                       )}
