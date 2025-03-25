@@ -95,7 +95,7 @@ const CreateModal = () => {
       <div className="text-base sm:text-lg text-gray-600">
         Hear directly from those who’ve experienced our service.{" "}
         <div className="text-yellow-600 cursor-pointer font-semibold underline" role="button" onClick={onOpen}>
-          Click here
+         Share Feedback
         </div>
       </div>
 

@@ -3,7 +3,9 @@ import * as Yup from "yup";
 const rules = {
   name: Yup.string().required("Name is a required field"),
   message: Yup.string().required("message is a required field"),
-  imageUrl: Yup.string().required("Image is a required field"),
+  imageUrl: Yup.string().required("Image is required"),
+  
+
 };
 
 export const create = Yup.object().shape({

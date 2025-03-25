@@ -26,6 +26,7 @@ export default function ServicesOffer() {
   const [filteredServices, setFilteredServices] = useState<Service[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -61,10 +62,17 @@ export default function ServicesOffer() {
     window.location.hash = categoryName;
   };
 
+  const truncateDescription = (description: string, maxLength = 100) => {
+    return description.length > maxLength ? `${description.substring(0, maxLength)}...` : description;
+  };
+
+  const formatPrice = (price: number) => {
+    return price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
   return (
     <div className="flex flex-col justify-center w-full">
       <div className="mx-auto max-w-7xl py-24 px-4 mt-1">
-        {/* Hero UI Tab */}
         <div className="flex flex-wrap gap-2 mb-6 justify-center">
           <a
             href="#All Services"
@@ -87,7 +95,6 @@ export default function ServicesOffer() {
             ))}
         </div>
 
-        {/* Search Bar */}
         <div className="flex justify-center mb-4">
           <div className="relative w-1/2">
             <LuSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
@@ -101,7 +108,6 @@ export default function ServicesOffer() {
           </div>
         </div>
 
-        {/* Service List */}
         <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-5 animate-fadeIn">
           {filteredServices
             .filter(service =>
@@ -113,9 +119,9 @@ export default function ServicesOffer() {
             .map((service) => (
               <div
                 key={service.id}
-                className="divide-y bg-white divide-gray-200 rounded-lg border shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-50 hover:shadow-2xl hover:border-yellow-600 hover:ring-2 hover:ring-yellow-400"
+                className="divide-y bg-white divide-gray-200 rounded-lg border shadow-md hover:bg-yellow-50 hover:shadow-2xl flex flex-col justify-between h-[400px]"
               >
-                <div className="p-4 sm:p-6">
+                <div className="p-4 sm:p-6 flex-grow">
                   {service.imageUrl && (
                     <img
                       src={service.imageUrl}
@@ -124,19 +130,31 @@ export default function ServicesOffer() {
                     />
                   )}
                   <h2 className="text-sm sm:text-lg font-bold leading-6 text-yellow-600 mt-2">{service.name}</h2>
-                  <p className="mb-1 text-xs sm:text-sm font-thin italic text-gray-800">{service.description}</p>
+                  <p className="text-xs sm:text-sm font-thin italic text-gray-800">
+                    {truncateDescription(service.description)}
+                    {service.description.length > 100 && (
+                      <button onClick={() => setSelectedService(service)} className="text-yellow-600 underline ml-1">Read More</button>
+                    )}
+                  </p>
                   <p className="text-xs sm:text-sm text-gray-700">
                     <span className="font-bold">Duration: </span>
                     {service.duration} {service.durationUnit}
                   </p>
-                  <p className="my-1 sm:my-2 text-xl sm:text-4xl font-bold tracking-tight text-gray-900 drop-shadow-md">
-                    ₱ <span>{service.price}</span>
-                  </p>
                 </div>
+                <p className="text-xl sm:text-4xl font-bold text-gray-900 text-center mb-4">₱ {formatPrice(service.price)}</p>
               </div>
-            ))
-          }
+            ))}
         </div>
+
+        {selectedService && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded-lg max-w-lg">
+              <h2 className="text-xl font-bold mb-4">{selectedService.name}</h2>
+              <p>{selectedService.description}</p>
+              <button onClick={() => setSelectedService(null)} className="mt-4 bg-yellow-500 text-white px-4 py-2 rounded-lg">Close</button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
